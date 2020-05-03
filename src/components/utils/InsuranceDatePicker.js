@@ -84,7 +84,7 @@ export default function InsuranceDatePicker(props) {
         error={props.touched}
         //helperText={props.touched && props.error}
         //helperText={props.touched?'required':''}
-        helperText="yolo"
+        //helperText="yolo"
         TextFieldComponent={renderTextField}
         variant="inline"
         />
