@@ -7,10 +7,6 @@ import Page404 from './Page404';
 import Header from './Header';
 import Home from './Home';
 import PaymentCreate from './PaymentCreate';
-import Prueba from './Prueba';
-import ReduxFormExample from './ReduxFormExample';
-import Example from './Example';
-import Test from './Test';
 
 class App extends React.Component {
 

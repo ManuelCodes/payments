@@ -1,6 +1,5 @@
 import {
-  DEFAULT_VALUES,
-  UPDATE_DATE
+  CREATE_PAYMENT
 } from '../constants/types';
 
 const INITIAL_STATE = {
@@ -9,18 +8,11 @@ const INITIAL_STATE = {
 };
 
 export default  (state = INITIAL_STATE, action) => {
+  console.log("reducer reducer reducer reducer");
+  console.log(action);
   switch(action.type) {
-    case DEFAULT_VALUES:
-      return {
-        ...state,
-        date: null,
-        currency: null
-      }
-    case UPDATE_DATE:
-      return {
-        ...state,
-        date: action.payload
-      }
+    case CREATE_PAYMENT:
+      return { ...state, [action.payload.id]: action.payload };
     default:
       return state;
   }
