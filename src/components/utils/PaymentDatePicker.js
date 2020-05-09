@@ -12,6 +12,8 @@ export default (props) => {
   const { input,  meta } = props;
   const weekAgo = new Date();
   weekAgo.setDate(weekAgo.getDate()-7);
+  console.log("DatePicker DatePicker DatePicker DatePicker");
+  console.log(input);
   return (
     <div>
       <div className="customDatePickerWidth">

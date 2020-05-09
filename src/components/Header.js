@@ -1,14 +1,29 @@
 import React from 'react';
 
+import _ from 'lodash';
+
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
+import { fetchPayments } from '../actions';
+import { connect } from 'react-redux';
+
 class Header extends React.Component {
 
+  componentDidMount() {
+    this.props.fetchPayments();
+  }
+
   render() {
+
+    const { payments }  = this.props;
+    if(payments.length === 0 ) {
+      return <div>loading..</div>;
+    }
+
     return (
 
       <div>
@@ -20,7 +35,9 @@ class Header extends React.Component {
             <Typography variant="h6" style={{flexGrow: '1'}} >
             </Typography>
             <Typography variant="h6"  >
-              Total amount: <b>$1230.23</b>
+              Total amount: <b>
+                { _.sumBy(payments, (payment) => parseFloat(payment.currencyInput) ) }
+              </b>
             </Typography>
           </Toolbar>
         </AppBar>
@@ -29,6 +46,10 @@ class Header extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+      payments: Object.values(state.payments)
+  };
+}
 
-
-export default Header;
+export default connect(mapStateToProps,{fetchPayments})(Header);

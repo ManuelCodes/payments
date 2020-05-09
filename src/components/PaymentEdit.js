@@ -1,15 +1,12 @@
 import React from 'react';
-
-import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-
-import { createPayment}  from '../actions';
-
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import '../styles.css';
 import PaymentDatePicker from './utils/PaymentDatePicker';
 import "react-datepicker/dist/react-datepicker.css";
+import { fetchPayment,editPayment } from '../actions';
+import { connect } from 'react-redux';
 
 
 import { registerLocale } from  "react-datepicker";
@@ -17,15 +14,7 @@ import es from 'date-fns/locale/es';
 registerLocale('es', es);
 
 
-
-
-
-
-class PaymentCreate extends React.Component {
-
-  handleSubmitEvent = (form) =>  {
-    this.props.createPayment(form);
-  }
+class PaymentEdit extends React.Component {
 
   renderCurrencyInput = props => {
     const { input, meta } = props;
@@ -35,9 +24,11 @@ class PaymentCreate extends React.Component {
           className="payment-value"
           type="text"
           onBlur={input.onBlur}
-          onFocus={input.focus}
+          onFocus={input.onFocus}
+          onChange={input.onChange}
           maxLength="8"
           placeholder="Payment Value"
+          value={input.value}
         />
         <div>
           {meta.touched && meta.error? <span>{meta.error}</span>:null }
@@ -57,14 +48,31 @@ class PaymentCreate extends React.Component {
     );
   }
 
-  render() {
+  handleSubmitEvent = (formValues) => {
+    console.log("handleSubmitEvent handleSubmitEvent handleSubmitEvent handleSubmitEvent");
+    console.log(formValues);
+    this.props.editPayment(this.props.match.params.id ,formValues);
+  }
 
+  componentDidMount() {
+
+    const response = fetchPayment(this.props.match.params.id);
+    response.then(payment => {
+      console.log(payment);
+      this.props.initialize( {
+        datePicker: new Date( payment.datePicker),
+        currencyInput: payment.currencyInput,
+        description: payment.description
+      });
+    });
+  }
+
+  render() {
     return (
       <form  className="container" onSubmit={this.props.handleSubmit (this.handleSubmitEvent)} >
         <Card className="card">
           <CardContent>
             <div>
-
               <Field
                 name="datePicker"
                 component={PaymentDatePicker}
@@ -90,11 +98,9 @@ class PaymentCreate extends React.Component {
           </CardContent>
         </Card>
       </form>
-    );
+    )
   }
-
 }
-
 
 const validate = formValues => {
   const errors = {};
@@ -110,9 +116,9 @@ const validate = formValues => {
   return errors;
 }
 
-PaymentCreate = reduxForm({
-  form: 'insuranceCreate', // a unique identifier for this form
+PaymentEdit = reduxForm({
+  form: 'insuranceEdit', // a unique identifier for this form
   validate: validate
-})(PaymentCreate);
+})(PaymentEdit);
 
-export default connect(null,{createPayment})(PaymentCreate);
+export default connect(null,{editPayment})(PaymentEdit);

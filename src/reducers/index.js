@@ -4,5 +4,5 @@ import paymentReducer from './paymentReducer';
 
 export default combineReducers({
   form: formReducer,
-  paymentValues: paymentReducer
+  payments: paymentReducer
 });
