@@ -44,13 +44,15 @@ export const editPayment = (id, formValues) => async dispatch => {
 };
 
 
-export const deletePayment = id => async dispatch => {
+export const deletePayment = (id, paymentsList) => async dispatch => {
   await jsonServer.delete(`/payments/${id}`);
+
+  const filteredList = paymentsList.filter((payment) => payment.id !== id)
 
   dispatch(
     {
       type: DELETE_PAYMENT,
-      payload: id
+      payload: filteredList
     }
   );
   history.push('/');

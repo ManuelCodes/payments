@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import {
   CREATE_PAYMENT,
   FETCH_PAYMENTS,
@@ -8,19 +7,19 @@ import {
 } from '../constants/types';
 
 
-export default  (state = {}, action) => {
+export default  (state = { paymentsList: [] }, action) => {
+
   switch(action.type) {
     case CREATE_PAYMENT:
-      return { ...state, [action.payload.id]: action.payload };
+      return state;
     case FETCH_PAYMENT:
-      //return { ...state, [action.payload.id]: action.payload }
-      return { ...state, ..._.mapKeys(action.payload, 'id') };
+      return { ...state, [action.payload.id]: action.payload }
     case FETCH_PAYMENTS:
-      return {...state, ...action.payload};
+      return { ...state, 'paymentsList': action.payload };
     case EDIT_PAYMENT:
-        return { ...state, [action.payload.id]: action.payload };
+      return state;
     case DELETE_PAYMENT:
-        return _.omit(state, action.payload);
+        return { ...state, 'paymentsList': action.payload };
     default:
       return state;
   }

@@ -73,11 +73,6 @@ class Home extends React.Component {
   }
 
   render() {
-    const { payments }  = this.props;
-
-    if(payments.length === 0 ) {
-      return <div>loading..</div>;
-    }
     return (
       <React.Fragment>
 
@@ -128,14 +123,14 @@ class Home extends React.Component {
   }
 
   deletePayment = () => {
-    this.props.deletePayment(this.state.id);
+    this.props.deletePayment(this.state.id, this.props.payments);
     this.handleClose();
   }
 }
 
 const mapStateToProps = state => {
   return {
-      payments: Object.values(state.payments)
+      payments: state.payments.paymentsList
   };
 }
 

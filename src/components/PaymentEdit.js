@@ -49,8 +49,6 @@ class PaymentEdit extends React.Component {
   }
 
   handleSubmitEvent = (formValues) => {
-    console.log("handleSubmitEvent handleSubmitEvent handleSubmitEvent handleSubmitEvent");
-    console.log(formValues);
     this.props.editPayment(this.props.match.params.id ,formValues);
   }
 
@@ -58,7 +56,6 @@ class PaymentEdit extends React.Component {
 
     const response = fetchPayment(this.props.match.params.id);
     response.then(payment => {
-      console.log(payment);
       this.props.initialize( {
         datePicker: new Date( payment.datePicker),
         currencyInput: payment.currencyInput,
@@ -117,7 +114,7 @@ const validate = formValues => {
 }
 
 PaymentEdit = reduxForm({
-  form: 'insuranceEdit', // a unique identifier for this form
+  form: 'insuranceEdit',
   validate: validate
 })(PaymentEdit);
 

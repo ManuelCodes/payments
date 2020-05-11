@@ -18,14 +18,8 @@ class Header extends React.Component {
   }
 
   render() {
-
     const { payments }  = this.props;
-    if(payments.length === 0 ) {
-      return <div>loading..</div>;
-    }
-
     return (
-
       <div>
         <AppBar position="static" style={{flexGrow: '1'}}>
           <Toolbar>
@@ -48,7 +42,7 @@ class Header extends React.Component {
 
 const mapStateToProps = state => {
   return {
-      payments: Object.values(state.payments)
+      payments: state.payments.paymentsList
   };
 }
 
